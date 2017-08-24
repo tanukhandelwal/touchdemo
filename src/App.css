@@ -3,14 +3,42 @@
 }
 
 .App-header {
-  background-color: #222;
-  height: 100px;
+  background-color: #03a9f4;
+  height: 75px;
   padding: 20px;
   color: white;
 }
 
-.TouchCard {
-  width: 500px;
-  height: 500px;
-  background-color: pink;
+.App-body {
+  display: flex;
+  font-family: 'Roboto', sans-serif;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.description {
+  text-align: left;
+  font-size: small;
+}
+
+@media screen and (min-width: 800px) {
+  .TouchCard {
+    width: 50%;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .TouchCard {
+    width: 100%;
+  }
+}
+
+.TouchRegion {
+  border-radius: 15px;
+  background-color: #eee;
+  margin-bottom: 4px;
+}
+
+.title {
+  text-align: left;
 }
