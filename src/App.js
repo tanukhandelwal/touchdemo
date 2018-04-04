@@ -136,6 +136,95 @@ class PanComponent extends TouchComponent {
   }
 }
 
+class SwipeComponent extends TouchComponent {
+  handleSwipe(e) {
+    let dx = {
+      [window.Hammer.DIRECTION_LEFT]: -20,
+      [window.Hammer.DIRECTION_RIGHT]: 20
+    }[e.offsetDirection];
+    const {cx} = this.state;
+    const newState = {
+      color: 'pink',
+      cx: cx + dx
+    };
+    this.setState(newState);
+    e.preventDefault();
+  }
+  render() {
+    let el = (
+       <div className="TouchCard mui-container">
+        <h1 className="title">On Swipe</h1>
+        <div id="zoom-component" className="TouchRegion mui-panel">
+          <svg>
+            <CircleComponent
+              color={this.state.color}
+              r={this.state.r}
+              cx={this.state.cx}
+              cy={this.state.cy}
+              onSwipe={(e) => this.handleSwipe(e)} />
+          </svg>
+        </div>
+        <div className="description">
+          One finger touch <br />
+          Example: Cine through large frames
+        </div>
+      </div>
+    );
+    return el;
+  }
+}
+
+
+
+class ZoomComponent extends TouchComponent {
+  handlePinchIn(e) {
+    const {r} = this.state;
+    this.setState({
+      r: r - 2
+    })
+    e.preventDefault();
+  }
+  handlePinchOut(e) {
+    const {r} = this.state;
+    this.setState({
+      r: r + 2
+    })
+    e.preventDefault();
+  }
+  render() {
+    let el = (
+       <div className="TouchCard mui-container">
+        <h1 className="title">On Zoom</h1>
+        <div id="zoom-component" className="TouchRegion mui-panel">
+          <svg>
+            <CircleComponent
+              options={{
+                    recognizers: {
+                      pinch: {
+                          enable: true
+                      }
+                  }
+              }}
+              color={this.state.color}
+              r={this.state.r}
+              cx={this.state.cx}
+              cy={this.state.cy}
+              onPinchIn={(e) => this.handlePinchIn(e)}
+              onPinchOut={(e) => this.handlePinchOut(e)} />
+          </svg>
+        </div>
+        <div className="description">
+          One finger touch <br />
+          Example: Select widget from widget section, delete a measurement
+        </div>
+      </div>
+    );
+    return el;
+  }
+}
+
+
+
 class App extends Component {
   render() {
     return (
@@ -147,6 +236,8 @@ class App extends Component {
           <TapComponent />
           <DoubleTapComponent />
           <PanComponent />
+          <ZoomComponent />
+          <SwipeComponent />
         </div>
       </div>
     );
