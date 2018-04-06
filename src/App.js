@@ -57,7 +57,7 @@ class TapComponent extends TouchComponent {
   render() {
     return (
       <CircleComponent
-        title="On Tap"
+        title="Tap"
         color={this.state.color}
         r={this.state.r}
         cx={this.state.cx}
@@ -65,7 +65,7 @@ class TapComponent extends TouchComponent {
         onPress={e => this.handleMouseDown(e)}
         onPressUp={e => this.handleMouseUp(e)}
         description="One finger touch"
-        example="Example: Select widget from widget section, delete a measurement"
+        example="Example: Select widget from widget section"
       />
     );
   }
@@ -82,14 +82,14 @@ class DoubleTapComponent extends TouchComponent {
   render() {
     return (
       <CircleComponent
-        title="On Double Tap"
+        title="Double Tap"
         color={this.state.color}
         r={this.state.r}
         cx={this.state.cx}
         cy={this.state.cy}
         onDoubleTap={e => this.handleDoubleTap(e)}
         description="Tap twice on the circle"
-        example="..."
+        example="Select exam from the transducer page"
       />
     );
   }
@@ -116,14 +116,14 @@ class PanComponent extends TouchComponent {
   render() {
     return (
       <CircleComponent
-        title="On Drag"
+        title="Drag"
         color={this.state.color}
         r={this.state.r}
         cx={this.state.cx}
         cy={this.state.cy}
         onPan={e => this.handlePan(e)}
         description="Press and drag on the circle"
-        example="..."
+        example="Move the zoom box over the image, Move widgets to the desired area"
       />
     );
   }
@@ -146,14 +146,14 @@ class SwipeComponent extends TouchComponent {
   render() {
     return (
       <CircleComponent
-        title="On Swipe"
+        title="Swipe"
         color={this.state.color}
         r={this.state.r}
         cx={this.state.cx}
         cy={this.state.cy}
         onSwipe={e => this.handleSwipe(e)}
-        description="One finger touch"
-        example="..."
+        description="Touch and move the circle"
+        example="Cine frame by frame"
       />
     );
   }
@@ -177,7 +177,7 @@ class ZoomComponent extends TouchComponent {
   render() {
     let el = (
       <CircleComponent
-        title="On Zoom"
+        title="Zoom"
         options={{
           recognizers: {
             pinch: {
