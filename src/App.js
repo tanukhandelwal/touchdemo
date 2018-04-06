@@ -1,18 +1,23 @@
-import React, { Component } from 'react';
-import HammerComponent from 'react-hammerjs';
+import React, { Component } from "react";
+import HammerComponent from "react-hammerjs";
 
-import './App.css';
+import "./App.css";
 
 class CircleComponent extends HammerComponent {
   render() {
     return (
-      <circle cx={this.props.cx} cy={this.props.cy}
-              r={this.props.r} stroke="black" strokeWidth="1"
-              fill={this.props.color}
-              onTouchStart={this.props.onMouseDown}
-              onTouchEnd={this.props.onMouseUp}
-              onMouseUp={this.props.onMouseUp}
-              onMouseDown={this.props.onMouseDown} />
+      <circle
+        cx={this.props.cx}
+        cy={this.props.cy}
+        r={this.props.r}
+        stroke="black"
+        strokeWidth="1"
+        fill={this.props.color}
+        onTouchStart={this.props.onMouseDown}
+        onTouchEnd={this.props.onMouseUp}
+        onMouseUp={this.props.onMouseUp}
+        onMouseDown={this.props.onMouseDown}
+      />
     );
   }
 }
@@ -21,39 +26,41 @@ class TouchComponent extends Component {
   constructor() {
     super();
     this.state = {
-      color: 'grey',
+      color: "grey",
       cx: 50,
       cy: 50,
       r: 40
-    }
+    };
   }
 }
 
 class TapComponent extends TouchComponent {
   handleMouseUp() {
     this.setState({
-      color: 'grey',
+      color: "grey",
       r: 40
-    })
+    });
   }
   handleMouseDown() {
     this.setState({
-      color: '#aad',
+      color: "#aad",
       r: 48
-    })
+    });
   }
   render() {
     return (
-       <div className="TouchCard mui-container">
+      <div className="TouchCard mui-container">
         <h1 className="title">On Tap</h1>
         <div className="TouchRegion mui-panel">
           <svg>
-            <CircleComponent color={this.state.color}
-                             r={this.state.r}
-                             cx={this.state.cx}
-                             cy={this.state.cy}
-                             onMouseDown={() => this.handleMouseDown()}
-                             onMouseUp={() => this.handleMouseUp()} />
+            <CircleComponent
+              color={this.state.color}
+              r={this.state.r}
+              cx={this.state.cx}
+              cy={this.state.cy}
+              onMouseDown={() => this.handleMouseDown()}
+              onMouseUp={() => this.handleMouseUp()}
+            />
           </svg>
         </div>
         <div className="description">
@@ -67,41 +74,43 @@ class TapComponent extends TouchComponent {
 
 class DoubleTapComponent extends TouchComponent {
   handleDoubleTap(e) {
-    const color = (this.state.color === 'orange') ? 'gray' : 'orange';
+    const color = this.state.color === "orange" ? "gray" : "orange";
     this.setState({
       color: color
-    })
+    });
     e.preventDefault();
   }
   render() {
     return (
-       <div className="TouchCard mui-container">
-          <h1 className="title">On Double Tap</h1>
-          <div className="TouchRegion mui-panel">
-            <svg>
-              <CircleComponent color={this.state.color}
-                               r={this.state.r}
-                               cx={this.state.cx}
-                               cy={this.state.cy}
-                               onDoubleTap={(e) => this.handleDoubleTap(e)}/>
-            </svg>
-          </div>
-          <div className="description">
-            Tap twice on the circle <br />
-            Example: ...
-          </div>
+      <div className="TouchCard mui-container">
+        <h1 className="title">On Double Tap</h1>
+        <div className="TouchRegion mui-panel">
+          <svg>
+            <CircleComponent
+              color={this.state.color}
+              r={this.state.r}
+              cx={this.state.cx}
+              cy={this.state.cy}
+              onDoubleTap={e => this.handleDoubleTap(e)}
+            />
+          </svg>
         </div>
+        <div className="description">
+          Tap twice on the circle <br />
+          Example: ...
+        </div>
+      </div>
     );
   }
 }
 
 class PanComponent extends TouchComponent {
   handlePan(e) {
-    const {deltaX, deltaY} = e;
-    const {cx, cy} = this.state;
+    const { deltaX, deltaY } = e;
+    const { cx, cy } = this.state;
     let [dx, dy] = [this.state.dx || 0, this.state.dy || 0];
     if (e.isFinal) {
-      this.setState({dx: 0, dy: 0});
+      this.setState({ dx: 0, dy: 0 });
       e.preventDefault();
       return;
     }
@@ -109,8 +118,8 @@ class PanComponent extends TouchComponent {
       cx: cx + (deltaX - dx),
       cy: cy + (deltaY - dy),
       dx: dx + (deltaX - dx),
-      dy: dy + (deltaY - dy),
-    })
+      dy: dy + (deltaY - dy)
+    });
     e.preventDefault();
   }
   render() {
@@ -119,20 +128,21 @@ class PanComponent extends TouchComponent {
         <h1 className="title">On Drag</h1>
         <div className="TouchRegion mui-panel">
           <svg>
-            <CircleComponent color={this.state.color}
-                             r={this.state.r}
-                             cx={this.state.cx}
-                             cy={this.state.cy}
-                             onPan={(e) => this.handlePan(e)} />
+            <CircleComponent
+              color={this.state.color}
+              r={this.state.r}
+              cx={this.state.cx}
+              cy={this.state.cy}
+              onPan={e => this.handlePan(e)}
+            />
           </svg>
         </div>
         <div className="description">
-            Press and drag on the circle <br />
-            Example: ...
+          Press and drag on the circle <br />
+          Example: ...
         </div>
       </div>
     );
-
   }
 }
 
@@ -142,9 +152,9 @@ class SwipeComponent extends TouchComponent {
       [window.Hammer.DIRECTION_LEFT]: -20,
       [window.Hammer.DIRECTION_RIGHT]: 20
     }[e.offsetDirection];
-    const {cx} = this.state;
+    const { cx } = this.state;
     const newState = {
-      color: 'pink',
+      color: "pink",
       cx: cx + dx
     };
     this.setState(newState);
@@ -152,7 +162,7 @@ class SwipeComponent extends TouchComponent {
   }
   render() {
     let el = (
-       <div className="TouchCard mui-container">
+      <div className="TouchCard mui-container">
         <h1 className="title">On Swipe</h1>
         <div id="zoom-component" className="TouchRegion mui-panel">
           <svg>
@@ -161,7 +171,8 @@ class SwipeComponent extends TouchComponent {
               r={this.state.r}
               cx={this.state.cx}
               cy={this.state.cy}
-              onSwipe={(e) => this.handleSwipe(e)} />
+              onSwipe={e => this.handleSwipe(e)}
+            />
           </svg>
         </div>
         <div className="description">
@@ -174,43 +185,42 @@ class SwipeComponent extends TouchComponent {
   }
 }
 
-
-
 class ZoomComponent extends TouchComponent {
   handlePinchIn(e) {
-    const {r} = this.state;
+    const { r } = this.state;
     this.setState({
       r: r - 2
-    })
+    });
     e.preventDefault();
   }
   handlePinchOut(e) {
-    const {r} = this.state;
+    const { r } = this.state;
     this.setState({
       r: r + 2
-    })
+    });
     e.preventDefault();
   }
   render() {
     let el = (
-       <div className="TouchCard mui-container">
+      <div className="TouchCard mui-container">
         <h1 className="title">On Zoom</h1>
         <div id="zoom-component" className="TouchRegion mui-panel">
           <svg>
             <CircleComponent
               options={{
-                    recognizers: {
-                      pinch: {
-                          enable: true
-                      }
+                recognizers: {
+                  pinch: {
+                    enable: true
                   }
+                }
               }}
               color={this.state.color}
               r={this.state.r}
               cx={this.state.cx}
               cy={this.state.cy}
-              onPinchIn={(e) => this.handlePinchIn(e)}
-              onPinchOut={(e) => this.handlePinchOut(e)} />
+              onPinchIn={e => this.handlePinchIn(e)}
+              onPinchOut={e => this.handlePinchOut(e)}
+            />
           </svg>
         </div>
         <div className="description">
@@ -222,8 +232,6 @@ class ZoomComponent extends TouchComponent {
     return el;
   }
 }
-
-
 
 class App extends Component {
   render() {
