@@ -3,6 +3,32 @@ import HammerComponent from "react-hammerjs";
 
 import "./App.css";
 
+class SquareComponent extends HammerComponent {
+  render() {
+    return (
+      <div className="TouchCard mui-container">
+        <h1 className="title">{this.props.title}</h1>
+        <div className="TouchRegion mui-panel">
+          <svg>
+             <rect
+             x="20" y="20" width="75" height="75"
+             fill="gray"
+             stroke="black"
+             strokeWidth="1"
+             style={{
+              transform: 'rotate(' + this.props.angle + 'deg)'
+            }} />
+          </svg>
+        </div>
+        <div className="description">
+          {this.props.description} <br />
+          {this.props.example}
+        </div>
+      </div>
+    );
+  }
+}
+
 class CircleComponent extends HammerComponent {
   render() {
     return (
@@ -16,8 +42,8 @@ class CircleComponent extends HammerComponent {
               fill={this.props.color}
               r={this.props.r}
               cx={this.props.cx}
-              cy={this.props.cy}
-            />
+              cy={this.props.cy}>
+              </circle>
           </svg>
         </div>
         <div className="description">
@@ -36,7 +62,8 @@ class TouchComponent extends Component {
       color: "grey",
       cx: 50,
       cy: 50,
-      r: 40
+      r: 40,
+      angle: 0
     };
   }
 }
@@ -191,13 +218,43 @@ class ZoomComponent extends TouchComponent {
         cy={this.state.cy}
         onPinchIn={e => this.handlePinchIn(e)}
         onPinchOut={e => this.handlePinchOut(e)}
-        description="One finger touch"
-        example="Select widget from widget section, delete a measurement"
+        description="Two finger touch"
+        example="Freeze Zoom"
       />
     );
     return el;
   }
 }
+
+class RotateComponent extends TouchComponent {
+  handleRotateMove(e) {
+    //const {angle} = this.state;
+    console.dir(e);
+    this.setState({
+      angle: e.angle,
+    });
+  }
+  render() {
+    return (
+      <SquareComponent
+        title="Rotate"
+        options={{
+          recognizers: {
+            rotate: {
+              enable: true
+            }
+          }
+        }}
+        angle={this.state.angle}
+        onRotateMove={e => this.handleRotateMove(e)}
+        description="One finger touch"
+        example="Select widget from widget section, delete a measurement"
+      />
+    );
+  }
+
+}
+
 
 class App extends Component {
   render() {
@@ -212,6 +269,7 @@ class App extends Component {
           <PanComponent />
           <ZoomComponent />
           <SwipeComponent />
+          <RotateComponent />
         </div>
       </div>
     );
